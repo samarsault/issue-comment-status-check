@@ -1,0 +1,14 @@
+name: SDK Regression
+on:
+  issue_comment:
+    types: [created, edited] 
+jobs:
+  regression:
+    name: regression
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'RUN_TASK' }}
+    steps:
+      - uses: xt0rted/pull-request-comment-branch@v2
+        if: ${{ github.event.issue.pull_request }}
+        id: comment-branch
+      - run: sleep 5
