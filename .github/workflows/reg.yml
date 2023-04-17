@@ -19,12 +19,15 @@ jobs:
             const { owner, repo } = context.repo;
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
             const state = 'pending';
+            const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            const description = '${{ job.name }}'
             
             github.repos.createCommitStatus({
               owner,
               repo,
               sha,
               state,
+              target_url
             });
       - run: sleep 5
         id: task
@@ -36,12 +39,16 @@ jobs:
             const { owner, repo } = context.repo;
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
             const state = '${{ steps.task.outcome }}'; // or 'failure', 'error', 'pending'
+            const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            const description = '${{ job.name }}'
             
             github.repos.createCommitStatus({
               owner,
               repo,
               sha,
               state,
+              description,
+              target_url
             });
 
 
