@@ -11,11 +11,27 @@ jobs:
       - uses: xt0rted/pull-request-comment-branch@v2
         if: ${{ github.event.issue.pull_request }}
         id: comment-branch
+      - name: Set commit status
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            const { owner, repo } = context.repo;
+            const sha = '${{ steps.comment-branch.outputs.head_sha }}'
+            const state = 'pending';
+            
+            github.repos.createCommitStatus({
+              owner,
+              repo,
+              sha,
+              state,
+            });
       - run: sleep 5
         id: task
       - name: Set commit status
         uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.PAT }}
           script: |
             const { owner, repo } = context.repo;
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
