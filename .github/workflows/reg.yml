@@ -20,7 +20,7 @@ jobs:
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
             const state = 'pending';
             const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-            const description = '${{ github.job.name }}'
+            const description = 'Test Job'
             
             github.repos.createCommitStatus({
               owner,
@@ -40,7 +40,7 @@ jobs:
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
             const state = '${{ steps.task.outcome }}'; // or 'failure', 'error', 'pending'
             const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-            const description = '${{ github.job.name }}'
+            const description = 'Test Job'
             
             github.repos.createCommitStatus({
               owner,
