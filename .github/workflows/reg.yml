@@ -23,6 +23,7 @@ jobs:
             const description = 'Test Job'
             
             github.repos.createCommitStatus({
+              name: 'Test',
               owner,
               repo,
               sha,
@@ -43,6 +44,7 @@ jobs:
             const description = 'Test Job'
             
             github.repos.createCommitStatus({
+              name: 'Test',
               owner,
               repo,
               sha,
