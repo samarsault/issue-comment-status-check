@@ -40,7 +40,7 @@ jobs:
             const { owner, repo } = context.repo;
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
             const state = '${{ steps.task.outcome }}'; // or 'failure', 'error', 'pending'
-            const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs/${{ jobs.job_id }}'
+            const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs/${{ github.jobs.job_id }}'
             const description = 'Test Job'
             
             github.repos.createCommitStatus({
