@@ -11,6 +11,12 @@ jobs:
       - uses: xt0rted/pull-request-comment-branch@v2
         if: ${{ github.event.issue.pull_request }}
         id: comment-branch
+      - name: Get Current Job Log URL
+        uses: Tiryoh/gha-jobid-action@v0
+        id: job-url
+        with:
+          github_token: ${{ secrets.PAT }}
+          job_name: "regression" 
       - name: Set commit status
         uses: actions/github-script@v4
         with:
@@ -19,7 +25,7 @@ jobs:
             const { owner, repo } = context.repo;
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
             const state = 'pending';
-            const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            const target_url = '${{ steps.job-url.outputs.html_url }}'
             const description = 'Test Job'
             
             github.repos.createCommitStatus({
@@ -40,7 +46,7 @@ jobs:
             const { owner, repo } = context.repo;
             const sha = '${{ steps.comment-branch.outputs.head_sha }}'
             const state = '${{ steps.task.outcome }}'; // or 'failure', 'error', 'pending'
-            const target_url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs/${{ job.container.id }}'
+            const target_url = '${{ steps.job-url.outputs.html_url }}'
             const description = 'Test Job'
             
             github.repos.createCommitStatus({
