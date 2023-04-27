@@ -6,7 +6,7 @@ jobs:
   regression:
     name: regression
     runs-on: ubuntu-latest
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'RUN_TASK' }}
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'RUN_TASK' && !github.event.pull_request.head.repo.fork }}
     steps:
       - uses: xt0rted/pull-request-comment-branch@v2
         if: ${{ github.event.issue.pull_request }}
