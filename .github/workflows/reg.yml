@@ -6,8 +6,21 @@ jobs:
   regression:
     name: regression
     runs-on: ubuntu-latest
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'RUN_TASK' && !github.event.pull_request.head.repo.fork }}
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'RUN_TASK' }}
     steps:
+      - name: Get user permissions
+        uses: actions/github-script@v5
+        id: check-access
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { login } = context.payload.comment.user;
+            const { data } = await github.repos.getCollaboratorPermissionLevel({ owner, repo, username: login });
+            return data.permission;
+          result-encoding: string
+      - name: Check Access Level
+        if: steps.check-access.outputs.result != 'write'
+        run: exit 1
       - uses: xt0rted/pull-request-comment-branch@v2
         if: ${{ github.event.issue.pull_request }}
         id: comment-branch
