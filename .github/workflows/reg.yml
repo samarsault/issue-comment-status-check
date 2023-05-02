@@ -16,6 +16,7 @@ jobs:
             const { owner, repo } = context.repo;
             const { login } = context.payload.comment.user;
             const { data } = await github.repos.getCollaboratorPermissionLevel({ owner, repo, username: login });
+            console.log(data.permission);
             return data.permission;
           result-encoding: string
       - name: Check Access Level
