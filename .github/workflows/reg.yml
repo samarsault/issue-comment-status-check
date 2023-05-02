@@ -9,7 +9,7 @@ jobs:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == 'RUN_TASK' }}
     steps:
       - name: Get user permissions
-        uses: actions/github-script@v5
+        uses: actions/github-script@v4
         id: check-access
         with:
           script: |
